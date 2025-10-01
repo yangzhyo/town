@@ -222,30 +222,30 @@ function drawTown() {
 }
 
 function drawVillagers() {
-  villagers.forEach((villager) => {
+  ctx.font = `${Math.max(12, TILE_SIZE * 0.45)}px "Noto Sans SC", sans-serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "bottom";
+
+  villagers.forEach((villager, index) => {
     const size = TILE_SIZE * 0.6;
-    const offset = TILE_SIZE * 0.2;
+    const centerX = villager.position.x * TILE_SIZE;
+    const centerY = villager.position.y * TILE_SIZE;
+
     ctx.fillStyle = villager.color;
-    ctx.fillRect(
-      villager.position.x * TILE_SIZE - size / 2,
-      villager.position.y * TILE_SIZE - size / 2,
-      size,
-      size
-    );
+    ctx.fillRect(centerX - size / 2, centerY - size / 2, size, size);
+
+    if (index === focusVillagerIndex) {
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(centerX - size / 2, centerY - size / 2, size, size);
+    }
 
     ctx.fillStyle = "#0c0f18";
-    ctx.fillRect(
-      villager.position.x * TILE_SIZE - size / 4,
-      villager.position.y * TILE_SIZE - size / 4,
-      size / 8,
-      size / 4
-    );
-    ctx.fillRect(
-      villager.position.x * TILE_SIZE + size / 8,
-      villager.position.y * TILE_SIZE - size / 4,
-      size / 8,
-      size / 4
-    );
+    ctx.fillRect(centerX - size / 4, centerY - size / 4, size / 8, size / 4);
+    ctx.fillRect(centerX + size / 8, centerY - size / 4, size / 8, size / 4);
+
+    ctx.fillStyle = "#f8fbff";
+    ctx.fillText(villager.name, centerX, centerY - size / 2 - TILE_SIZE * 0.1);
   });
 }
 
@@ -390,5 +390,35 @@ function startSimulation() {
   drawVillagers();
   setInterval(tick, 900);
 }
+
+function getVillagerAtPosition(x, y) {
+  const canvasRect = canvas.getBoundingClientRect();
+  const canvasX = x - canvasRect.left;
+  const canvasY = y - canvasRect.top;
+
+  return villagers.findIndex((villager) => {
+    const size = TILE_SIZE * 0.6;
+    const centerX = villager.position.x * TILE_SIZE;
+    const centerY = villager.position.y * TILE_SIZE;
+
+    return (
+      canvasX >= centerX - size / 2 &&
+      canvasX <= centerX + size / 2 &&
+      canvasY >= centerY - size / 2 &&
+      canvasY <= centerY + size / 2
+    );
+  });
+}
+
+function handleCanvasClick(event) {
+  const villagerIndex = getVillagerAtPosition(event.clientX, event.clientY);
+  if (villagerIndex !== -1) {
+    focusVillagerIndex = villagerIndex;
+    updateInfoPanel();
+    draw();
+  }
+}
+
+canvas.addEventListener("click", handleCanvasClick);
 
 startSimulation();
