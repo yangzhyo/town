@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>像素小镇 · AI 镇民日常</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="top-bar">
+        <h1>像素小镇 · AI 镇民日常</h1>
+        <p class="subtitle">观察镇民的家庭、事业与社交生活，感受他们的日常节奏。</p>
+      </header>
+      <section class="content">
+        <canvas id="townCanvas" width="480" height="480" aria-label="像素小镇示意图"></canvas>
+        <aside class="panel" aria-live="polite">
+          <div class="time-display">
+            <h2>小镇时钟</h2>
+            <p id="timeLabel"></p>
+            <p id="dayLabel"></p>
+          </div>
+          <div class="villager-info">
+            <h2>今日焦点镇民</h2>
+            <div id="villagerDetails"></div>
+          </div>
+          <div class="daily-journal">
+            <h2>小镇日记</h2>
+            <ul id="journalList"></ul>
+          </div>
+        </aside>
+      </section>
+      <footer class="footer">
+        <p>提示：镇民会在一天当中前往住所、工作地点与公共空间，关系亲密的镇民会在夜晚相聚。</p>
+      </footer>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
