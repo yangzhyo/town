@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数字员工 — HR 小智</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- 侧边栏 -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <span class="logo-icon">🏢</span>
+            <span class="logo-text">数字员工</span>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-section-title">角色列表</div>
+          <a class="nav-item active" href="#">
+            <span class="nav-icon">👩‍💼</span>
+            <span class="nav-label">HR 小智</span>
+            <span class="nav-badge">在线</span>
+          </a>
+          <a class="nav-item disabled" href="#">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">财务小慧</span>
+            <span class="nav-badge soon">即将上线</span>
+          </a>
+          <a class="nav-item disabled" href="#">
+            <span class="nav-icon">💻</span>
+            <span class="nav-label">IT 小维</span>
+            <span class="nav-badge soon">即将上线</span>
+          </a>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="sidebar-footer-text">知识库覆盖 10+ 大类政策</div>
+        </div>
+      </aside>
+
+      <!-- 主内容区 -->
+      <main class="main">
+        <!-- 顶栏 -->
+        <header class="topbar">
+          <button class="menu-btn" id="menuBtn" aria-label="菜单">☰</button>
+          <div class="topbar-info">
+            <div class="topbar-avatar">👩‍💼</div>
+            <div>
+              <div class="topbar-name">HR 小智</div>
+              <div class="topbar-desc">公司政策与制度顾问 · 7×24 在线</div>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <button class="btn-icon" id="clearBtn" title="清空对话">🗑️</button>
+          </div>
+        </header>
+
+        <!-- 聊天区 -->
+        <div class="chat-area" id="chatArea">
+          <!-- 欢迎卡片 -->
+          <div class="welcome-card" id="welcomeCard">
+            <div class="welcome-avatar">👩‍💼</div>
+            <h2 class="welcome-title">你好，我是 HR 小智</h2>
+            <p class="welcome-desc">
+              我是你的数字 HR 助手，可以帮你解答公司考勤、请假、薪酬福利、入离职等各类政策制度问题。请随时向我提问！
+            </p>
+            <div class="quick-questions" id="quickQuestions"></div>
+          </div>
+
+          <!-- 消息列表 -->
+          <div class="messages" id="messages"></div>
+        </div>
+
+        <!-- 输入区 -->
+        <div class="input-area">
+          <div class="input-wrapper">
+            <textarea
+              id="userInput"
+              placeholder="输入你的问题，例如：年假有多少天？"
+              rows="1"
+            ></textarea>
+            <button class="send-btn" id="sendBtn" title="发送">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <div class="input-hint">HR 小智基于公司政策知识库回答，如有疑问请联系人力资源部确认</div>
+        </div>
+      </main>
+    </div>
+
+    <script src="knowledge.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
