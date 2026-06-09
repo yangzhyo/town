@@ -1,50 +1,54 @@
-# Town Explorer Web App Requirements Spec
+# 像素小镇 Web 应用需求规格
 
-## 1. Project Overview
-The Town Explorer is a single-page web experience that introduces visitors to a fictional town. It presents key attractions, local events, and interactive highlights intended to inspire exploration and tourism.
+## 1. 项目概述
+像素小镇是一个零依赖的单页 Web 体验：在 Canvas 上以《星露谷物语》风格实时模拟一座小镇的日常。镇民按作息表生活，环境随日夜、天气与四季变化；右侧信息面板提供时钟、镇民档案与事件日记。
 
-## 2. Goals and Success Metrics
-- **Engagement:** Encourage visitors to spend time exploring the sections and interactive components of the page.
-- **Clarity:** Provide concise information about landmarks, events, and amenities.
-- **Conversion:** Prompt visitors to sign up for updates or plan a visit via call-to-action elements.
+## 2. 目标
+- **沉浸感**：像素美术、光照与粒子营造可长时间观赏的小镇氛围。
+- **可读性**：任意时刻都能从面板读出当前时间、天气、镇民在做什么。
+- **零构建**：纯静态 HTML/CSS/JS，任何静态服务器即可运行。
 
-Success metrics include time-on-page, click-through rates on interactive elements, and newsletter sign-up conversions (tracked outside the scope of this static build).
+## 3. 功能需求
+### 3.1 地图与渲染
+- 40×28 的 16px 瓦片地图：草地、土路、石板广场、河流、湖泊、木桥、码头、耕地。
+- 所有精灵（建筑、树木、人物、头像）由 Canvas 程序化生成，禁用平滑缩放保持像素感。
+- 八栋建筑：三栋民居、面包房、画室、学堂、咖啡馆、天文台，含坡屋顶、烟囱、门窗与挂牌。
+- 实体按 Y 坐标排序绘制（画家算法），人物可被建筑遮挡关系正确。
 
-## 3. Functional Requirements
-1. **Hero Section:**
-   - Display town name, tagline, and visually engaging hero image or gradient background.
-   - Include a primary call-to-action button that anchors to the attractions section.
-2. **Attractions Gallery:**
-   - Present at least three featured attractions with imagery or illustrative icons.
-   - Each attraction card provides a title, short description, and optional "Learn more" link.
-3. **Events Timeline:**
-   - Highlight upcoming events in chronological order with date, title, and summary.
-   - Allow users to expand for additional details using a simple toggle interaction.
-4. **Local Tips Section:**
-   - Share curated tips or itineraries using bullet lists or accordions.
-   - Include contact information for the visitor center.
-5. **Interactive Map Placeholder:**
-   - Provide a stylized map placeholder component that can later be replaced with an actual map embed.
-6. **Newsletter Signup:**
-   - Offer an email capture form with validation for required fields and success/error messaging.
+### 3.2 镇民模拟
+- 六位镇民，各自拥有家庭、社交圈、职业与逐分钟作息表。
+- 移动采用 A* 寻路，道路成本低于草地，镇民自然沿路通勤。
+- 到达建筑类目的地后进入室内（精灵隐藏、建筑窗灯点亮、烟囱冒烟）。
+- 镇民有心情与精力数值，随活动消耗 / 恢复；好友相遇时冒爱心气泡。
 
-## 4. Non-Functional Requirements
-- Page must be responsive for mobile (min-width 320px) up to large desktop breakpoints.
-- Maintain accessibility by using semantic HTML, appropriate headings, color contrast, and focus states.
-- JavaScript must be modular and avoid global variables beyond a single namespace.
-- CSS should employ custom properties for brand colors and spacing scales.
-- No build tools are required; the project should run with static hosting.
+### 3.3 时间系统
+- 游戏内 1 天 = 1440 分钟，1 倍速约 2.4 分钟真实时间；支持暂停 / 1× / 3×。
+- 日夜环境色按关键帧插值（黎明橙、白昼无色、黄昏紫、深夜蓝）。
+- 夜晚路灯与有人建筑的窗户产生挖洞式光照与暖色泛光。
+- 每 6 天换季（春夏秋冬循环）：草地 / 树冠 / 道路换色，冬季积雪与枯枝。
+- 每天随机天气：晴 / 多云 / 雨（冬季为雪），雨雪有全屏粒子，雨天耕地变湿。
 
-## 5. Content Structure
-- **Navigation:** Sticky top navigation with smooth scrolling to sections.
-- **Sections:** Hero, Attractions, Events, Tips, Map Placeholder, Newsletter, Footer.
-- **Footer:** Include contact information, social links, and copyright notice.
+### 3.4 农田
+- 向阳农园按季节种植防风草 / 番茄 / 南瓜，作物每日生长一阶段，成熟自动收获并写入日记；冬季休耕。
 
-## 6. Future Enhancements (Out of Scope)
-- Replace map placeholder with an interactive map integration.
-- Add localization support for multiple languages.
-- Implement analytics tracking for user interactions.
+### 3.5 信息面板与交互
+- 时钟盒：时间、日期（第 N 天 · 季节第 d 天）、季节与天气图标、速度控制。
+- 镇民列表：程序化像素头像，点击切换焦点。
+- 档案卡：头像、职业、当前行为、心情、精力条、家庭与社交圈、个性描述。
+- 小镇日记：到达事件、跨天分隔线、换季与收获事件，最多保留 8 条。
+- 画布交互：点击镇民设为焦点（头顶出现指示箭头），悬停显示姓名与当前行为的浮动提示。
 
-## 7. Documentation & Maintenance
-- Update this spec whenever new features are introduced or requirements change.
-- Document manual testing steps in the README for new interactions or UI components.
+## 4. 非功能需求
+- 移动端到桌面响应式（面板在窄屏下移至画布下方）。
+- 语义化 HTML 与 ARIA 标注；JS 整体包裹在 IIFE 中不污染全局。
+- 无外部运行时依赖、无构建步骤；CSS 使用自定义属性管理配色。
+- 渲染性能：地表静态层按「季节+干湿」缓存，仅水面、作物、实体与光照逐帧绘制。
+
+## 5. 未来增强（暂不实现）
+- 节日事件（集市、烟火）与镇民对话气泡文本。
+- 可保存的好感度系统。
+- 音效与背景音乐。
+
+## 6. 文档与维护
+- 新增交互行为时，在 README 的「手动验证」一节补充验证步骤。
+- 功能变化时同步更新本规格。

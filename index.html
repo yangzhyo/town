@@ -10,18 +10,33 @@
     <main class="app">
       <header class="top-bar">
         <h1>像素小镇 · AI 镇民日常</h1>
-        <p class="subtitle">观察镇民的家庭、事业与社交生活，感受他们的日常节奏。</p>
+        <p class="subtitle">日夜与四季流转，观察六位镇民的家庭、事业与社交节奏。</p>
       </header>
       <section class="content">
-        <canvas id="townCanvas" width="480" height="480" aria-label="像素小镇示意图"></canvas>
+        <div class="stage">
+          <canvas id="townCanvas" width="640" height="448" aria-label="像素小镇模拟画面"></canvas>
+          <div id="tooltip" class="tooltip hidden" aria-hidden="true"></div>
+        </div>
         <aside class="panel" aria-live="polite">
-          <div class="time-display">
-            <h2>小镇时钟</h2>
-            <p id="timeLabel"></p>
-            <p id="dayLabel"></p>
+          <div class="clock-box">
+            <div class="clock-top">
+              <span id="seasonLabel"></span>
+              <span id="weatherLabel"></span>
+            </div>
+            <p class="clock-time" id="timeLabel"></p>
+            <p class="clock-day" id="dayLabel"></p>
+            <div class="speed-controls" role="group" aria-label="模拟速度">
+              <button type="button" data-speed="0" title="暂停">⏸</button>
+              <button type="button" data-speed="1" class="active" title="正常速度">▶</button>
+              <button type="button" data-speed="3" title="三倍速">⏩</button>
+            </div>
+          </div>
+          <div class="roster">
+            <h2>镇民</h2>
+            <div id="rosterList"></div>
           </div>
           <div class="villager-info">
-            <h2>今日焦点镇民</h2>
+            <h2>镇民档案</h2>
             <div id="villagerDetails"></div>
           </div>
           <div class="daily-journal">
@@ -31,7 +46,7 @@
         </aside>
       </section>
       <footer class="footer">
-        <p>提示：镇民会在一天当中前往住所、工作地点与公共空间，关系亲密的镇民会在夜晚相聚。</p>
+        <p>提示：点击画布上的镇民或左侧头像可查看档案；入夜后窗灯、路灯与萤火虫会亮起，季节每六天更替一次。</p>
       </footer>
     </main>
     <script src="script.js"></script>
